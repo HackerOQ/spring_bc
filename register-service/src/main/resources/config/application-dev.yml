@@ -1,0 +1,23 @@
+server:
+  port: 8090
+#服务注册中心也会将自己作为客户端来尝试注册自己，所以我们要禁用她（心中）的客户端行为
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+    ip-address: localhost
+  client:
+    registerwitheureka: false #代表不向注册中心注册自己
+    fetchregistry: false #由于注册中心的职责就是维护服务实例，她并不需要去检索服务，所以设置为false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+        #设为false，关闭自我保护
+    enable-self-preservation: false
+        #清理间隔（单位毫秒，默认是60*1000）
+    eviction-interval-timer-in-ms: 3000
+spring:
+  cloud:
+    inetutils:
+      use-only-site-local-interfaces: true

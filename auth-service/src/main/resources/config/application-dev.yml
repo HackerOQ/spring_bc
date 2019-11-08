@@ -1,0 +1,63 @@
+server:
+  port: 8092
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    #    password: root
+    jedis:
+      pool:
+        max-idle: 100
+        min-idle: 1
+        max-active: 1000
+        max-wait: -1ms
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  #  config-location: classpath:public/mybatis-configuration.xml
+  configuration:
+    #允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值), 数据表的pk生成策略将被覆盖
+    use-generated-keys: true
+    #启动结果集自动映射（NONE、PARTIAL、FULL）
+    auto-mapping-behavior: partial
+    #驼峰映射
+    map-underscore-to-camel-case: true
+    #允许使用列标签代替列名
+    use-column-label: true
+    #全局映射器启用缓存
+    cache-enabled: true
+    multiple-result-sets-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #查询时,关闭关联对象及时加载以提高性能
+    lazy-loading-enabled: false
+    #设置关联对象加载的形态,此处为按需加载字段(加载字段由SQL指定),不会加载关联表的所有字段,以提高性能
+    aggressive-lazy-loading: false
+    #对于批量更新操作缓存SQL以提高性能
+    default-executor-type: reuse
+    #数据库超过25000毫秒仍未响应则超时
+    default-statement-timeout: 25000
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    ip-address: localhost
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8090}/eureka/
+
+security:
+  oauth2:
+    resource:
+      #      filter-order: 3
+      max-login-error-times: 5
+      lock-time: 30
+    client:
+      client-id: jyed
+      client-secret: jyed
