@@ -28,9 +28,16 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String index() throws InterruptedException {
-        count++;
-        System.out.println("=============="+count);
-        int sleepTime = new Random().nextInt(10000);
+
+        int sleepTime = new Random().nextInt(6000);
+//        int sleepTime = 6000;
+        boolean flag=false;
+        if ((sleepTime-2000)<=0){
+            System.out.println("no retry!!!");
+        }else {
+            System.out.println("need retry,"+((sleepTime/2000)+1));
+        }
+
         Thread.sleep(sleepTime);
         ServiceInstance instances = client.getInstances("sys-service").get(0);
         String host = instances.getHost();
