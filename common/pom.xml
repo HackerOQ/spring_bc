@@ -19,7 +19,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <org.springframework.version>4.2.0.RELEASE</org.springframework.version>
+        <org.springframework.version>6.0.0</org.springframework.version>
         <org.activiti.version>5.16</org.activiti.version>
 
         <java.version>1.8</java.version>
